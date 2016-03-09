@@ -38,8 +38,29 @@ def udpRX(delay):
   #u.writeStr("received message:")
   #u.writeStr(ord(my_bytes[1]))
   #u.writeStr("\n")
-  varA = ord(my_bytes[1])
-  value = float(varA)
+  #varA = ord(my_bytes[3])//ch3 0 - 100
+  ch1 = ord(my_bytes[1])
+  ch2 = ord(my_bytes[2])
+  ch3 = ord(my_bytes[3])
+  ch4 = ord(my_bytes[4])
+  #add -var
+  if ch1 > 110:
+    ch1 = ch1 - 255
+  if ch2 > 110:
+    ch2 = ch2 - 255
+  if ch4 > 110:
+    ch4 = ch4 - 255
+  #debug data
+  u.writeStr("ch1:")
+  u.writeStr(str(ch1))
+  u.writeStr(" ch2:")
+  u.writeStr(str(ch2))
+  u.writeStr(" ch3:")
+  u.writeStr(str(ch3))
+  u.writeStr(" ch4:")
+  u.writeStr(str(ch4))
+  u.writeStr("\n")
+  value = float(ch3)
   value = value/100
   pwm0.write(value)
 
@@ -157,13 +178,13 @@ def i2cTest(delay):
     last_gyro_y_angle = unfiltered_gyro_angle_y
     last_gyro_z_angle = unfiltered_gyro_angle_z
     # end complementary 
-    u.writeStr("angle_x :")
-    u.writeStr(str(angle_x))
-    u.writeStr("  angle_y :")
-    u.writeStr(str(angle_y))
-    u.writeStr("  angle_z :")
-    u.writeStr(str(angle_z))
-    u.writeStr("\n")
+    #u.writeStr("angle_x :")
+    #u.writeStr(str(angle_x))
+    #u.writeStr("  angle_y :")
+    #u.writeStr(str(angle_y))
+    #u.writeStr("  angle_z :")
+    #u.writeStr(str(angle_z))
+    #u.writeStr("\n")
     time.sleep(0.010)#read very 10ms
 
 t1 = Thread(target=udpRX, args=(1,))
